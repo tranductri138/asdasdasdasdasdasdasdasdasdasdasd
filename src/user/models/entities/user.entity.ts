@@ -1,0 +1,44 @@
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import * as bcrypt from 'bcrypt';
+import { Role } from '../dtos/roles.enum';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ProfileEntity } from 'src/profile/models/entities/profile.entity';
+
+@Entity('user')
+export class UserEntity {
+  @ApiPropertyOptional({ type: String })
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ nullable: false, unique: true })
+  email: string;
+
+  @Column({ nullable: false })
+  password: string;
+
+  @Column({ type: 'enum', enum: Role, default: Role.USER })
+  role: Role;
+
+  @OneToOne(() => ProfileEntity, (profile) => profile.user) // specify inverse side as a second parameter
+  profile: ProfileEntity;
+
+  @BeforeInsert()
+  emailToLowerCase() {
+    this.email = this.email.toLowerCase();
+  }
+
+  async hashPass(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
+  }
+
+  async isPass(password: string, hash: string): Promise<boolean> {
+    return await bcrypt.compare(password, hash);
+  }
+}
