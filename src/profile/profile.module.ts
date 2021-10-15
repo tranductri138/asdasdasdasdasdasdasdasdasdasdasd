@@ -1,18 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CareerModule } from 'src/career/career.module';
+import { QuestionModule } from 'src/career/question.module';
 import { ProfileEntity } from './models/entities/profile.entity';
 import { ProfileController } from './profile.controller';
-import { ProfileRepository } from './profile.repository';
-import { ProfileService } from './profile.service';
+import { ProfileSerivce } from './profile.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ProfileEntity, ProfileRepository]),
-    CareerModule,
-  ],
+  imports: [TypeOrmModule.forFeature([ProfileEntity]), QuestionModule],
   controllers: [ProfileController],
-  providers: [ProfileService],
-  exports: [ProfileService],
+  providers: [ProfileSerivce],
+  exports: [ProfileSerivce],
 })
 export class ProfileModule {}

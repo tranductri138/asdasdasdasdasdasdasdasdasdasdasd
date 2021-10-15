@@ -11,7 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LocalStrategy } from 'src/auth/auth.strategy';
 import { hasRoles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
@@ -26,6 +26,8 @@ import { UserEntity } from './models/entities/user.entity';
 import { UserService } from './user.service';
 
 @Controller('users')
+@ApiTags('User')
+@ApiBearerAuth('access-token')
 export class UserController {
   constructor(
     private userService: UserService,
@@ -51,7 +53,6 @@ export class UserController {
   }
 
   // delete have access token
-  @ApiBearerAuth('token')
   @hasRoles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':email')
@@ -59,8 +60,6 @@ export class UserController {
     await this.userService.deleteOne(email);
     return { messeage: 'delete successs !!' };
   }
-
-  @ApiBearerAuth('token')
   @hasRoles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Put(':email')

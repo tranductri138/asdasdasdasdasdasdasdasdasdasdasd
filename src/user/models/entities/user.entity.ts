@@ -2,6 +2,7 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -26,8 +27,8 @@ export class UserEntity {
   @Column({ type: 'enum', enum: Role, default: Role.USER })
   role: Role;
 
-  @OneToOne(() => ProfileEntity, (profile) => profile.user) // specify inverse side as a second parameter
-  profile: ProfileEntity;
+  @OneToMany(() => ProfileEntity, (profile) => profile.user, {})
+  profiles: ProfileEntity[];
 
   @BeforeInsert()
   emailToLowerCase() {

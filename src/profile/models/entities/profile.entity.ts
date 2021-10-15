@@ -1,4 +1,5 @@
-import { CareerEntity } from 'src/career/models/entities/career.entity';
+import { AnswerEntity } from 'src/answer/models/entities/answer.entity';
+import { QuestionEntity } from 'src/career/models/entities/question.entity';
 import { UserEntity } from 'src/user/models/entities/user.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -25,47 +27,28 @@ export class ProfileEntity {
   @Column()
   email: string;
 
-  @Column({ nullable: true })
+  @Column()
   education: string;
 
-  @Column({ nullable: true })
+  @Column()
   skill: string;
 
-  @Column({ nullable: true })
+  @Column()
   summary: string;
 
-  @Column({ nullable: true })
+  @Column()
   experience: string;
 
-  @Column({ nullable: true })
+  @Column()
   certifications: string;
 
-  @Column({ nullable: true })
-  answersFirst: string;
+  @OneToMany(() => QuestionEntity, (question) => question.profile, {})
+  questions: QuestionEntity[];
 
-  @Column({ nullable: true })
-  answerSecond: string;
+  @OneToMany(() => AnswerEntity, (answer) => answer.profile, {})
+  answers: AnswerEntity[];
 
-  @Column({ nullable: true })
-  answerThird: string;
-
-  //   @Column()
-  //   @ManyToOne(() => CareerEntity, (career) => career.name)
-  //   careeer: CareerEntity;
-
-  //   @OneToOne(() => CareerEntity, { cascade: true })
-  //   @JoinColumn({ name: 'name' })
-  //   career: CareerEntity;
-  @ManyToOne(() => CareerEntity, (career) => career.profile, {
-    nullable: false,
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ referencedColumnName: 'name' })
-  career: CareerEntity;
-
-  @OneToOne(() => UserEntity, (user) => user.profile)
-  @JoinColumn()
+  @ManyToOne(() => UserEntity, (user) => user.profiles, { cascade: true })
   user: UserEntity;
 
   @CreateDateColumn()

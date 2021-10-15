@@ -1,43 +1,72 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as PDFDocument from 'pdfkit';
-import { ProfileEntity } from 'src/profile/models/entities/profile.entity';
-import { ProfileService } from 'src/profile/profile.service';
 
 @Injectable()
 export class PdfSerVice {
-  constructor(private profileRepo: ProfileService) {}
-
   async createPdf(id: string) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const fs = require('fs');
     const doc = new PDFDocument();
     console.log(id);
-
-    const profile = await this.profileRepo.findOne(id);
-    console.log(profile);
     const path = `src/file/${Date.now()}.pdf`;
     // Add a 50 point margin on all sides
     doc.pipe(fs.createWriteStream(path));
 
-    console.log(profile);
+    // doc.fontSize(24);
+    // doc.font('Times-Roman').text("Candidate's Name :" + '    ' + profile.name);
 
-    doc.fontSize(24);
-    doc.font('Times-Roman').text("candidate's name :" + '    ' + profile.name);
-    doc
-      .font('Times-Roman')
-      .text("candidate's summary :" + '    ' + profile.summary);
-    doc
-      .font('Times-Roman')
-      .text("candidate's email :" + '    ' + profile.email);
-    doc
-      .font('Times-Roman')
-      .text("candidate's phone :" + '    ' + profile.phone);
-    doc.font('Times-Roman');
-    doc
-      .font('Times-Roman')
-      .text("candidate's email :" + '    ' + profile.certifications);
-    //   .text("candidate's skill :" + '    ' + profile.skill);
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Phone :" + '    ' + profile.phone);
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Email :" + '    ' + profile.email);
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Education :" + '    ' + profile.education);
+
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Career Name :" + '    ' + profile.careerName);
+
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Skill :" + '    ' + profile.skill);
+
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Summary :" + '    ' + profile.summary);
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Experience :" + '   ' + profile.experience);
+
+    // doc
+    //   .font('Times-Roman')
+    //   .text("Candidate's Certifications :" + '    ' + profile.certifications);
+    // doc
+    //   .font('Times-Roman')
+    //   .text('-------------------------------------------------');
+    // doc
+    //   .font('Times-Roman')
+    //   .text(
+    //     'Question First -' +
+    //       career.questionFirst +
+    //       ':  ' +
+    //       profile.answersFirst,
+    //   );
+    // doc
+    //   .font('Times-Roman')
+    //   .text(
+    //     'Question Second -' +
+    //       career.questionSecond +
+    //       ':  ' +
+    //       profile.answerSecond,
+    //   );
+    // doc
+    //   .font('Times-Roman')
+    //   .text(
+    //     'Question Third -' + career.questionThird + ':  ' + profile.answerThird,
+    //   );
 
     // doc.addPage({
     //   margin: 50,

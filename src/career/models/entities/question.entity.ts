@@ -3,31 +3,24 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('career')
-export class CareerEntity {
+@Entity('question')
+export class QuestionEntity {
   @PrimaryGeneratedColumn()
   id: number;
   // @OneToMany(() => ProfileEntity, profile => profile.)
 
   @Column({ nullable: false, unique: true })
-  name: string;
+  question: string;
 
-  @Column()
-  questionFirst: string;
-
-  @Column({ nullable: true })
-  questionSecond: string;
-
-  @Column({ nullable: true })
-  questionThird: string;
-
-  @OneToMany(() => ProfileEntity, (profile) => profile.career)
-  profile: ProfileEntity[];
+  @ManyToOne(() => ProfileEntity, (profile) => profile.questions, {
+    cascade: true,
+  })
+  profile: ProfileEntity;
 
   @CreateDateColumn()
   created_at: Date;

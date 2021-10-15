@@ -6,8 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
-import { CareerModule } from './career/career.module';
 import { GenPdfModule } from './gen-pdf/gen-pdf.module';
+import { SendEmailModule } from './send-email/send-email.module';
+import { QuestionModule } from './career/question.module';
 
 @Module({
   imports: [
@@ -18,8 +19,9 @@ import { GenPdfModule } from './gen-pdf/gen-pdf.module';
     UserModule,
     AuthModule,
     ProfileModule,
-    CareerModule,
+    QuestionModule,
     GenPdfModule,
+    SendEmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
