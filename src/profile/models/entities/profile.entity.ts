@@ -1,5 +1,5 @@
 import { AnswerEntity } from 'src/answer/models/entities/answer.entity';
-import { QuestionEntity } from 'src/career/models/entities/question.entity';
+import { QuestionEntity } from 'src/ques/models/entities/question.entity';
 import { UserEntity } from 'src/user/models/entities/user.entity';
 import {
   Column,
@@ -15,13 +15,40 @@ import {
 import { v4 as uuid } from 'uuid';
 @Entity('profile')
 export class ProfileEntity {
+  constructor(
+    nameProfile: string,
+    name: string,
+    phone: string,
+    email: string,
+    education: string,
+    skill: string,
+    summary: string,
+    experience: string,
+    certifications: string,
+    user: UserEntity,
+  ) {
+    this.nameProfile = nameProfile;
+    this.name = name;
+    this.phone = phone;
+    this.email = email;
+    this.education = education;
+    this.skill = skill;
+    this.summary = summary;
+    this.experience = experience;
+    this.certifications = certifications;
+    this.user = user;
+  }
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
+  nameProfile: string;
 
   @Column()
+  name: string;
+
+  @Column({ default: '012', length: 3 })
   phone: string;
 
   @Column()

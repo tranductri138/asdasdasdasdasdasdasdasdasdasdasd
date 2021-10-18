@@ -26,10 +26,7 @@ export class UserService {
   }
 
   async findOne(email: string) {
-    const a = await this.userRepo.findOne({ email });
-    console.log(a);
-
-    return a;
+    return await this.userRepo.findOne({ email });
   }
 
   deleteOne(email: string) {

@@ -8,7 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { GenPdfModule } from './gen-pdf/gen-pdf.module';
 import { SendEmailModule } from './send-email/send-email.module';
-import { QuestionModule } from './career/question.module';
+import { AnswerModule } from './answer/answer.module';
+import { QuestionModule } from './ques/question.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { QuestionModule } from './career/question.module';
     QuestionModule,
     GenPdfModule,
     SendEmailModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
